@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Typography, Button } from "@mui/material";
+import { Grid, Typography, Button, Link } from "@mui/material";
 
 function Footer() {
   return (
@@ -103,6 +103,32 @@ function Footer() {
               Terms
             </Button>
           </div>
+        </Grid>
+        <Grid className="pt-20" item xs={12}>
+          <Typography variant="body2" components="p" align="center">
+            &copy; 2023 My Company. All rights reserved
+          </Typography>
+          <Typography variant="body2" components="p" align="center">
+            Made with love by Avinash
+          </Typography>
+          <Typography variant="body2" components="p" align="center">
+            Icons made by{" "}
+            <Link
+              href="https://www.freepik.com"
+              color="inherit"
+              underline="always"
+            >
+              Freepik
+            </Link>{" "}
+            from{" "}
+            <Link
+              href="https://www.flaticon.com/"
+              color="inherit"
+              underline="always"
+            >
+              www.flaticon.com
+            </Link>
+          </Typography>
         </Grid>
       </Grid>
     </div>
