@@ -17,6 +17,7 @@ function classNames(...classes) {
 
 export default function Navigation() {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const openUserMenu = Boolean(anchorEl);
@@ -37,10 +38,11 @@ export default function Navigation() {
     setOpenAuthModal(false);
   };
   const handleCategoryClick = (category, section, item, close) => {
+    navigate(`/${category.id}/${section.id}/${item.id}`);
     close();
   };
   return (
-    <div className="bg-white z-10">
+    <div className="bg-white z-10 mb-10">
       {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
@@ -144,7 +146,6 @@ export default function Navigation() {
                               {section.name}
                             </p>
                             <ul
-                              role="list"
                               aria-labelledby={`${category.id}-${section.id}-heading-mobile`}
                               className="mt-6 flex flex-col space-y-6"
                             >
@@ -246,7 +247,7 @@ export default function Navigation() {
                 <div className="flex h-full space-x-8">
                   {navigation.categories.map((category) => (
                     <Popover key={category.name} className="flex">
-                      {({ open }) => (
+                      {({ open, close }) => (
                         <>
                           <div className="relative flex">
                             <Popover.Button
@@ -322,7 +323,6 @@ export default function Navigation() {
                                             {section.name}
                                           </p>
                                           <ul
-                                            role="list"
                                             aria-labelledby={`${section.name}-heading`}
                                             className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
                                           >
@@ -336,8 +336,8 @@ export default function Navigation() {
                                                     handleCategoryClick(
                                                       category,
                                                       section,
-                                                      item
-                                                      // close
+                                                      item,
+                                                      close
                                                     )
                                                   }
                                                   className="cursor-pointer hover:text-gray-800"
@@ -391,7 +391,9 @@ export default function Navigation() {
                         R
                       </Avatar>
                       <MenuItem onClick={handleCloseUserMenu}>Profile</MenuItem>
-                      <MenuItem>My Orders</MenuItem>
+                      <MenuItem onClick={() => navigate("/account/order")}>
+                        My Orders
+                      </MenuItem>
                       <MenuItem>Logout</MenuItem>
                     </div>
                   ) : (
