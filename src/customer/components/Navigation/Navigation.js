@@ -40,7 +40,7 @@ export default function Navigation() {
     close();
   };
   return (
-    <div className="bg-white z-10">
+    <div className="bg-white z-10 mb-10">
       {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
