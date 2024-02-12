@@ -17,6 +17,7 @@ function classNames(...classes) {
 
 export default function Navigation() {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const openUserMenu = Boolean(anchorEl);
@@ -37,6 +38,7 @@ export default function Navigation() {
     setOpenAuthModal(false);
   };
   const handleCategoryClick = (category, section, item, close) => {
+    navigate(`/${category.id}/${section.id}/${item.id}`);
     close();
   };
   return (
@@ -245,7 +247,7 @@ export default function Navigation() {
                 <div className="flex h-full space-x-8">
                   {navigation.categories.map((category) => (
                     <Popover key={category.name} className="flex">
-                      {({ open }) => (
+                      {({ open, close }) => (
                         <>
                           <div className="relative flex">
                             <Popover.Button
@@ -334,8 +336,8 @@ export default function Navigation() {
                                                     handleCategoryClick(
                                                       category,
                                                       section,
-                                                      item
-                                                      // close
+                                                      item,
+                                                      close
                                                     )
                                                   }
                                                   className="cursor-pointer hover:text-gray-800"
@@ -389,7 +391,9 @@ export default function Navigation() {
                         R
                       </Avatar>
                       <MenuItem onClick={handleCloseUserMenu}>Profile</MenuItem>
-                      <MenuItem>My Orders</MenuItem>
+                      <MenuItem onClick={() => navigate("/account/order")}>
+                        My Orders
+                      </MenuItem>
                       <MenuItem>Logout</MenuItem>
                     </div>
                   ) : (
