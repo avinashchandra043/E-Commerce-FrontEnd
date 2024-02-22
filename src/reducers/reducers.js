@@ -2,9 +2,15 @@ import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { authReducer } from "./authReducer";
+import { productReducer } from "./productReducer";
+import { cartReducer } from "./cartReducer";
+import { orderReducer } from "./orderReducer";
 
 const appReducer = combineReducers({
   authReducer,
+  productReducer,
+  cartReducer,
+  orderReducer,
 });
 
 /**
@@ -16,9 +22,6 @@ const appReducer = combineReducers({
  *
  */
 const rootReducer = (state, action) => {
-  //   if (action.type === USER_SIGN_OUT) {
-  //     return { userReducer: {} };
-  //   }
   return appReducer(state, action);
 };
 
