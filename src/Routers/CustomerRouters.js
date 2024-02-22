@@ -9,8 +9,14 @@ import ProductDetails from "../customer/components/ProductDetails/ProductDetails
 import Checkout from "../customer/components/Checkout/Checkout";
 import Order from "../customer/components/Order/Order";
 import OrderDetails from "../customer/components/Order/OrderDetails";
+import { connect } from "react-redux";
+import { getToken, getUser } from "../Action/authAction";
 
-const CustomerRouters = () => {
+const CustomerRouters = ({ jwt }) => {
+  const token = getToken();
+  if (token && !jwt) {
+    getUser(token);
+  }
   return (
     <div>
       <div>
@@ -18,17 +24,14 @@ const CustomerRouters = () => {
       </div>
       <Routes>
         <Route path="/" element={<Home />}></Route>
+        <Route path="/login" element={<Home />}></Route>
+        <Route path="/register" element={<Home />}></Route>
         <Route path="/:levelOne/:levelTwo/:levelThree" element={<Product />} />
         <Route path="/product/:productId" element={<ProductDetails />} />
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/account/order" element={<Order />} />
         <Route path="/account/order/:orderId" element={<OrderDetails />} />
-
-        {/* <Cart /> */}
-        {/* <Checkout /> */}
-        {/* <Order /> */}
-        {/* <OrderDetails /> */}
       </Routes>
       <div>
         <Footer />
@@ -36,5 +39,7 @@ const CustomerRouters = () => {
     </div>
   );
 };
-
-export default CustomerRouters;
+const mapStateToProps = ({ authReducer }) => ({
+  jwt: authReducer.jwt,
+});
+export default connect(mapStateToProps)(CustomerRouters);

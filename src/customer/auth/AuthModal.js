@@ -1,8 +1,9 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import RegisterForm from "./RegisterForm";
+import { useLocation } from "react-router-dom";
+import LoginForm from "./LoginForm";
 
 const style = {
   position: "absolute",
@@ -16,6 +17,7 @@ const style = {
   p: 4,
 };
 const AuthModal = ({ handleClose, open }) => {
+  const location = useLocation();
   return (
     <div>
       <Modal
@@ -25,9 +27,7 @@ const AuthModal = ({ handleClose, open }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          {location.pathname === "/login" ? <LoginForm /> : <RegisterForm />}
         </Box>
       </Modal>
     </div>
