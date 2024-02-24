@@ -11,7 +11,7 @@ import { Avatar, Button, MenuItem, Menu } from "@mui/material";
 import { navigation } from "./navigationData";
 import AuthModal from "../../auth/AuthModal";
 import { connect } from "react-redux";
-import { getToken, getUser, logout } from "../../../Action/authAction";
+import { getUser, logout } from "../../../Action/authAction";
 import { AvatarColor } from "../../../Data/colorData";
 
 function classNames(...classes) {
@@ -26,7 +26,6 @@ const Navigation = ({ user, token }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const openUserMenu = Boolean(anchorEl);
-  const jwt = getToken();
 
   const handleUserClick = (e) => {
     setAnchorEl(e.currentTarget);
@@ -56,10 +55,13 @@ const Navigation = ({ user, token }) => {
     if (user) {
       handleClose();
     }
-    if (location.pathname === "/login" || location.pathname === "/register") {
+    if (
+      user &&
+      (location.pathname === "/login" || location.pathname === "/register")
+    ) {
       navigate(-1);
     }
-  }, [user]);
+  }, [location.pathname, navigate, user]);
 
   useEffect(() => {
     getUser(token);
@@ -202,25 +204,22 @@ const Navigation = ({ user, token }) => {
 
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   <div className="flow-root">
-                    <a
-                      href="#"
+                    <button
+                      // href="#"
                       className="-m-2 block p-2 font-medium text-gray-900"
                     >
                       Sign in
-                    </a>
+                    </button>
                   </div>
                   <div className="flow-root">
-                    <a
-                      href="#"
-                      className="-m-2 block p-2 font-medium text-gray-900"
-                    >
+                    <button className="-m-2 block p-2 font-medium text-gray-900">
                       Create account
-                    </a>
+                    </button>
                   </div>
                 </div>
 
                 <div className="border-t border-gray-200 px-4 py-6">
-                  <a href="#" className="-m-2 flex items-center p-2">
+                  <button className="-m-2 flex items-center p-2">
                     <img
                       src="https://tailwindui.com/img/flags/flag-canada.svg"
                       alt=""
@@ -230,7 +229,7 @@ const Navigation = ({ user, token }) => {
                       CAD
                     </span>
                     <span className="sr-only">, change currency</span>
-                  </a>
+                  </button>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

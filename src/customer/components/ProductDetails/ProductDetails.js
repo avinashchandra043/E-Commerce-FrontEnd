@@ -63,7 +63,6 @@ function classNames(...classes) {
 }
 
 function ProductDetails({ productData }) {
-  const [selectedColor, setSelectedColor] = useState(product?.colors?.[0]);
   const [selectedSize, setSelectedSize] = useState(product?.sizes?.[2]);
   const navigate = useNavigate();
   const params = useParams();
