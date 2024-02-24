@@ -29,20 +29,18 @@ export const getCart = async () => {
 export const addItemToCart = async (reqData) => {
   dispatch({ type: ADD_ITEM_TO_CART_REQUEST });
   try {
-    const { data } = await baseApi.put(`/api/cart/add`, reqData.data);
+    const { data } = await baseApi.put(`/api/cart/add`, reqData);
     dispatch({ type: ADD_ITEM_TO_CART_SUCCESS, payload: data });
   } catch (err) {
     dispatch({ type: ADD_ITEM_TO_CART_FAILURE, payload: err.message });
   }
 };
 
-export const removeCartItem = async (reqData) => {
+export const removeCartItem = async (cartItemId) => {
   dispatch({ type: REMOVE_CART_ITEM_REQUEST });
   try {
-    const { data } = await baseApi.delete(
-      `/api/cart_items/${reqData.cartItemId}`
-    );
-    dispatch({ type: REMOVE_CART_ITEM_SUCCESS, payload: data });
+    const { data } = await baseApi.delete(`/api/cart_items/${cartItemId}`);
+    dispatch({ type: REMOVE_CART_ITEM_SUCCESS, payload: cartItemId });
   } catch (err) {
     dispatch({ type: REMOVE_CART_ITEM_FAILURE, payload: err.message });
   }

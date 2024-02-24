@@ -1,8 +1,12 @@
 import React from "react";
 import { Grid, Button, Box, TextField } from "@mui/material";
 import AddressCard from "../AddressCard/AddressCard";
+import { connect } from "react-redux";
+import { createOrder } from "../../../Action/orderAction";
+import { useNavigate } from "react-router-dom";
 
 const DeliveryAddressForm = () => {
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
@@ -15,6 +19,8 @@ const DeliveryAddressForm = () => {
       zipCode: data.get("zip"),
       mobile: data.get("phoneNumber"),
     };
+    const orderData = { address, navigate };
+    createOrder(orderData);
   };
   return (
     <div>

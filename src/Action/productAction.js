@@ -26,20 +26,18 @@ export const findProducts = async (reqData) => {
   } = reqData;
   try {
     const { data } = await baseApi.get(
-      `/api/products?color=${colors}&size=${sizes}&minPrice=${minPrice}&maxPrice=${maxPrice}&minDiscount=${minDiscount}&category=${category}&stock=${stock}&sort=${sort}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+      `/api/products?color=${colors}&sizes=${sizes}&minPrice=${minPrice}&maxPrice=${maxPrice}&minDiscount=${minDiscount}&category=${category}&stock=${stock}&sort=${sort}&pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
-    console.log(">>>>productData", data);
     dispatch({ type: FIND_PRODUCT_SUCCESS, payload: data });
   } catch (err) {
     dispatch({ type: FIND_PRODUCT_FAILURE, payload: err.message });
   }
 };
 
-export const findProductsById = async (reqData) => {
+export const findProductsById = async (productId) => {
   dispatch({ type: FIND_PRODUCT_BY_ID_REQUEST });
-  const { productId } = reqData;
   try {
-    const data = await baseApi.get(`/api/products/id/${productId}`);
+    const { data } = await baseApi.get(`/api/products/id/${productId}`);
     dispatch({ type: FIND_PRODUCT_BY_ID_SUCCESS, payload: data });
   } catch (err) {
     dispatch({ type: FIND_PRODUCT_BY_ID_FAILURE, payload: err.message });
