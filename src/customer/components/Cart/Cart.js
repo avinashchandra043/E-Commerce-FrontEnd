@@ -1,18 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CartItem from "./CartItem";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-function Cart() {
+import { connect } from "react-redux";
+import { getCart } from "../../../Action/cartAction";
+function Cart({ cart, updateCartItem, deleteCartItem }) {
   const navigate = useNavigate();
   const handleCheckout = () => {
     navigate(`/checkout?step=2`);
   };
+  useEffect(() => {
+    getCart();
+  }, [updateCartItem, deleteCartItem]);
   return (
     <div>
       <div className="lg:grid grid-cols-3 lg:px-16 relative">
         <div className="col-span-2">
-          {[1, 1, 1].map((item) => (
-            <CartItem />
+          {cart?.cartItems.map((item) => (
+            <CartItem item={item} />
           ))}
         </div>
         <div className="px-5 sticky top-0 h-[100vh] mt-5 lg:mt-0">
@@ -22,11 +27,11 @@ function Cart() {
             <div className="space-y-3 font-semibold mb-10">
               <div className="flex justify-between pt-3 text-black">
                 <span>Price</span>
-                <span>₹4334</span>
+                <span>₹{cart?.totalPrice}</span>
               </div>
               <div className="flex justify-between pt-3 ">
                 <span>Discount</span>
-                <span className="text-green-600">-₹4334</span>
+                <span className="text-green-600">-₹{cart?.discount}</span>
               </div>
               <div className="flex justify-between pt-3 text-black">
                 <span>Delivery Charge</span>
@@ -34,7 +39,9 @@ function Cart() {
               </div>
               <div className="flex justify-between pt-3  font-bold">
                 <span>Total Amount</span>
-                <span className="text-green-600">₹1334</span>
+                <span className="text-green-600">
+                  ₹{cart?.totalDiscountedPrice}
+                </span>
               </div>
             </div>
             <Button
@@ -51,5 +58,9 @@ function Cart() {
     </div>
   );
 }
-
-export default Cart;
+const mapStateToProps = ({ cartReducer }) => ({
+  cart: cartReducer.cart,
+  updateCartItem: cartReducer.updateCartItem,
+  deleteCartItem: cartReducer.deleteCartItem,
+});
+export default connect(mapStateToProps)(Cart);

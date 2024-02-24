@@ -1,19 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AddressCard from "../AddressCard/AddressCard";
 import CartItem from "../Cart/CartItem";
 import { Button } from "@mui/material";
+import { getOrderById } from "../../../Action/orderAction";
+import { useLocation } from "react-router-dom";
+import { connect } from "react-redux";
 
-const OrderSummary = () => {
+const OrderSummary = ({ order }) => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const orderId = searchParams.get("order_id");
+  useEffect(() => {
+    getOrderById(orderId);
+  }, [orderId]);
   return (
     <div>
       <div className="p-5 shadow-lg rounded-s-md border">
-        <AddressCard />
+        <AddressCard address={order?.shippingAddress} />
       </div>
       <div>
         <div className="lg:grid grid-cols-3  relative">
           <div className="col-span-2">
-            {[1, 1, 1].map((item) => (
-              <CartItem />
+            {order?.orderItems.map((item) => (
+              <CartItem item={item} />
             ))}
           </div>
           <div className="px-5 sticky top-0 h-[100vh] mt-5 lg:mt-0">
@@ -25,11 +34,11 @@ const OrderSummary = () => {
               <div className="space-y-3 font-semibold mb-10">
                 <div className="flex justify-between pt-3 text-black">
                   <span>Price</span>
-                  <span>₹4334</span>
+                  <span>₹{order?.totalPrice}</span>
                 </div>
                 <div className="flex justify-between pt-3 ">
                   <span>Discount</span>
-                  <span className="text-green-600">-₹4334</span>
+                  <span className="text-green-600">-₹{order?.discount}</span>
                 </div>
                 <div className="flex justify-between pt-3 text-black">
                   <span>Delivery Charge</span>
@@ -37,7 +46,9 @@ const OrderSummary = () => {
                 </div>
                 <div className="flex justify-between pt-3  font-bold">
                   <span>Total Amount</span>
-                  <span className="text-green-600">₹1334</span>
+                  <span className="text-green-600">
+                    ₹{order?.totalDiscountedPrice}
+                  </span>
                 </div>
               </div>
               <Button
@@ -55,4 +66,8 @@ const OrderSummary = () => {
   );
 };
 
-export default OrderSummary;
+const mapStateToProps = ({ orderReducer }) => ({
+  order: orderReducer.order,
+});
+
+export default connect(mapStateToProps)(OrderSummary);
