@@ -13,6 +13,7 @@ import AuthModal from "../../auth/AuthModal";
 import { connect } from "react-redux";
 import { getUser, logout } from "../../../Action/authAction";
 import { AvatarColor } from "../../../Data/colorData";
+import Logo from "../../../Assets/ECommerceLogo.png";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -49,6 +50,11 @@ const Navigation = ({ user, token }) => {
   const handleLogout = () => {
     logout();
     handleCloseUserMenu();
+  };
+
+  const handleHomeClick = () => {
+    if (location.pathname === "/") return;
+    navigate("/");
   };
 
   useEffect(() => {
@@ -221,12 +227,12 @@ const Navigation = ({ user, token }) => {
                 <div className="border-t border-gray-200 px-4 py-6">
                   <button className="-m-2 flex items-center p-2">
                     <img
-                      src="https://tailwindui.com/img/flags/flag-canada.svg"
+                      src="https://tailwindui.com/img/flags/flag-india.svg"
                       alt=""
                       className="block h-auto w-5 flex-shrink-0"
                     />
                     <span className="ml-3 block text-base font-medium text-gray-900">
-                      CAD
+                      IND
                     </span>
                     <span className="sr-only">, change currency</span>
                   </button>
@@ -251,13 +257,12 @@ const Navigation = ({ user, token }) => {
               </button>
 
               {/* Logo */}
-              <div className="ml-4 flex lg:ml-0">
-                <span className="sr-only">Your Company</span>
-                <img
-                  className="h-8 w-8 mr-2"
-                  src="https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg?size=338&ext=jpg&ga=GA1.1.632798143.1705881600&semt=ais"
-                  alt=""
-                />
+              <div
+                className="ml-4 flex lg:ml-0 cursor-pointer"
+                onClick={handleHomeClick}
+              >
+                <span className="sr-only">Crazy Cart</span>
+                <img className="h-8 w-8 mr-2" src={Logo} alt="" />
               </div>
 
               {/* Flyout menus */}
