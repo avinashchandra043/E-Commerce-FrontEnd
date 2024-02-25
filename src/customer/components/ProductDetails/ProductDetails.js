@@ -6,10 +6,7 @@ import { mens_kurta } from "../../../Data/mens_kurta";
 import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
 import { useNavigate, useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import {
-  findProductReview,
-  findProductsById,
-} from "../../../Action/productAction";
+import { findProductsById } from "../../../Action/productAction";
 import { addItemToCart } from "../../../Action/cartAction";
 
 const product = {
@@ -67,7 +64,6 @@ function classNames(...classes) {
 
 function ProductDetails({ productData }) {
   const [selectedSize, setSelectedSize] = useState(product?.sizes?.[2]);
-  const [review, setReview] = useState(null);
   const navigate = useNavigate();
   const params = useParams();
 
@@ -78,7 +74,6 @@ function ProductDetails({ productData }) {
   };
   useEffect(() => {
     findProductsById(params.productId);
-    setReview(findProductReview(params.productId));
   }, [params.productId]);
 
   return (

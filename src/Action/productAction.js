@@ -43,10 +43,3 @@ export const findProductsById = async (productId) => {
     dispatch({ type: FIND_PRODUCT_BY_ID_FAILURE, payload: err.message });
   }
 };
-
-export const findProductReview = async (productId) => {
-  try {
-    const { data } = await baseApi.get(`/api/review/product/${productId}`);
-    return data;
-  } catch (err) {}
-};
