@@ -9,7 +9,7 @@ import AddressCard from "../AddressCard/AddressCard";
 
 const PaymentSuccess = ({ order }) => {
   const [paymentId, setPaymentId] = useState(null);
-  const [PaymentStatus, setPayementStatus] = useState();
+  const [PaymentStatus, setPayementStatus] = useState(null);
   const { orderId } = useParams();
   useEffect(() => {
     const urlParam = new URLSearchParams(window.location.search);
@@ -32,7 +32,7 @@ const PaymentSuccess = ({ order }) => {
           severity="success"
           sx={{ mb: 6, width: "fitContent" }}
         >
-          <AlertTitle>PaymentSuccess</AlertTitle>
+          <AlertTitle>{PaymentStatus}</AlertTitle>
           Congratulation your order get placed
         </Alert>
       </div>

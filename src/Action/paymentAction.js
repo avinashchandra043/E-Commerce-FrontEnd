@@ -12,9 +12,8 @@ export const createPayment = async (orderId) => {
   dispatch({ type: CREATE_PAYMENT_REQUEST });
   try {
     const { data } = await baseApi.post(`/api/payments/${orderId}`, {});
-    console.log(">>>>", data);
     if (data.payment_link_url) {
-      // window.location.href = data.payment_link_url;
+      window.location.href = data.payment_link_url;
     }
   } catch (err) {
     dispatch({ type: CREATE_PAYMENT_FAILURE, payload: err.message });
@@ -24,7 +23,7 @@ export const createPayment = async (orderId) => {
 export const updatePayment = async (reqData) => {
   dispatch({ type: UPDATE_PAYMENT_REQUEST });
   try {
-    const { data } = await baseApi.get(
+    await baseApi.get(
       `/api/payments?payment_id=${reqData.paymentId}&order_id=${reqData.orderId}`
     );
   } catch (err) {
