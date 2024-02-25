@@ -6,7 +6,10 @@ import { mens_kurta } from "../../../Data/mens_kurta";
 import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
 import { useNavigate, useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import { findProductsById } from "../../../Action/productAction";
+import {
+  findProductReview,
+  findProductsById,
+} from "../../../Action/productAction";
 import { addItemToCart } from "../../../Action/cartAction";
 
 const product = {
@@ -64,6 +67,7 @@ function classNames(...classes) {
 
 function ProductDetails({ productData }) {
   const [selectedSize, setSelectedSize] = useState(product?.sizes?.[2]);
+  const [review, setReview] = useState(null);
   const navigate = useNavigate();
   const params = useParams();
 
@@ -74,6 +78,7 @@ function ProductDetails({ productData }) {
   };
   useEffect(() => {
     findProductsById(params.productId);
+    setReview(findProductReview(params.productId));
   }, [params.productId]);
 
   return (
@@ -161,10 +166,16 @@ function ProductDetails({ productData }) {
               {/* Reviews */}
               <div className="mt-6">
                 <div className="flex items-center space-x-3">
-                  <Rating name="read-only" value={4} readOnly />
-                  <p className="opacity-50 text-sm">34234 Ratings</p>
+                  <Rating
+                    name="read-only"
+                    value={productData?.ratingData.avgRating}
+                    readOnly
+                  />
+                  <p className="opacity-50 text-sm">
+                    {productData?.ratingData.totalRating} Ratings
+                  </p>
                   <p className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                    545324 Reviews
+                    {productData?.reviews.length} Reviews
                   </p>
                 </div>
               </div>
@@ -302,8 +313,8 @@ function ProductDetails({ productData }) {
             <Grid container spacing={7}>
               <Grid item xs={7}>
                 <div className="space-y-5">
-                  {[1, 1, 1].map((item) => (
-                    <ProductReviewCard />
+                  {productData?.reviews.map((item) => (
+                    <ProductReviewCard review={item} />
                   ))}
                 </div>
               </Grid>
@@ -312,7 +323,9 @@ function ProductDetails({ productData }) {
                 <h1 className="text-xl font-semibold pb-2">Product Ratings</h1>
                 <div className="flex items-center space-x-3">
                   <Rating value={4.5} readOnly precision={0.5} />
-                  <p className="opacity-60">53434 Ratings</p>
+                  <p className="opacity-60">
+                    {productData.ratingData.totalRating} Ratings
+                  </p>
                 </div>
                 <Box className="mt-5 space-y-3">
                   <Grid container alignItems="center" gap={2}>
@@ -323,24 +336,15 @@ function ProductDetails({ productData }) {
                       <LinearProgress
                         sx={{ bgcolor: "#d0d0d0", borderRadius: 4, height: 7 }}
                         variant="determinate"
-                        value={40}
+                        value={
+                          (productData?.ratingData.excellent * 100) /
+                          productData.ratingData.totalRating
+                        }
                         color="success"
                       />
                     </Grid>
                   </Grid>
-                  <Grid container alignItems="center" gap={2}>
-                    <Grid item xs={2}>
-                      <p>Very Good</p>
-                    </Grid>
-                    <Grid item xs={7}>
-                      <LinearProgress
-                        sx={{ bgcolor: "#d0d0d0", borderRadius: 4, height: 7 }}
-                        variant="determinate"
-                        value={40}
-                        color="success"
-                      />
-                    </Grid>
-                  </Grid>
+
                   <Grid container alignItems="center" gap={2}>
                     <Grid item xs={2}>
                       <p>Good</p>
@@ -349,7 +353,10 @@ function ProductDetails({ productData }) {
                       <LinearProgress
                         sx={{ bgcolor: "#d0d0d0", borderRadius: 4, height: 7 }}
                         variant="determinate"
-                        value={40}
+                        value={
+                          (productData?.ratingData.good * 100) /
+                          productData.ratingData.totalRating
+                        }
                         color="secondary"
                       />
                     </Grid>
@@ -362,7 +369,10 @@ function ProductDetails({ productData }) {
                       <LinearProgress
                         sx={{ bgcolor: "#d0d0d0", borderRadius: 4, height: 7 }}
                         variant="determinate"
-                        value={40}
+                        value={
+                          (productData?.ratingData.average * 100) /
+                          productData.ratingData.totalRating
+                        }
                         color="warning"
                       />
                     </Grid>
@@ -375,7 +385,10 @@ function ProductDetails({ productData }) {
                       <LinearProgress
                         sx={{ bgcolor: "#d0d0d0", borderRadius: 4, height: 7 }}
                         variant="determinate"
-                        value={40}
+                        value={
+                          (productData?.ratingData.poor * 100) /
+                          productData.ratingData.totalRating
+                        }
                         color="error"
                       />
                     </Grid>
