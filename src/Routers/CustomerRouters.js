@@ -11,6 +11,8 @@ import Order from "../customer/components/Order/Order";
 import OrderDetails from "../customer/components/Order/OrderDetails";
 import { connect } from "react-redux";
 import { getToken, getUser } from "../Action/authAction";
+import PaymentSuccess from "../customer/components/Payment/PaymentSuccess";
+import Page404 from "../Pages/Page404/Page404";
 
 const CustomerRouters = ({ jwt }) => {
   const token = getToken();
@@ -32,6 +34,8 @@ const CustomerRouters = ({ jwt }) => {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/account/order" element={<Order />} />
         <Route path="/account/order/:orderId" element={<OrderDetails />} />
+        <Route path="/payment/:orderId" element={<PaymentSuccess />} />
+        <Route path="*" element={<Page404 />} />
       </Routes>
       <div>
         <Footer />
