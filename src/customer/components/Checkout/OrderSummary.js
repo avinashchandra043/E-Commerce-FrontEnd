@@ -5,6 +5,7 @@ import { Button } from "@mui/material";
 import { getOrderById } from "../../../Action/orderAction";
 import { useLocation } from "react-router-dom";
 import { connect } from "react-redux";
+import { createPayment } from "../../../Action/paymentAction";
 
 const OrderSummary = ({ order }) => {
   const location = useLocation();
@@ -13,6 +14,10 @@ const OrderSummary = ({ order }) => {
   useEffect(() => {
     getOrderById(orderId);
   }, [orderId]);
+
+  const handleCheckout = () => {
+    createPayment(orderId);
+  };
   return (
     <div>
       <div className="p-5 shadow-lg rounded-s-md border">
@@ -55,6 +60,7 @@ const OrderSummary = ({ order }) => {
                 variant="contained"
                 className="w-full mt-5"
                 sx={{ px: "2.5rem", py: ".7rem", bgcolor: "#9155fd" }}
+                onClick={handleCheckout}
               >
                 Checkout
               </Button>
