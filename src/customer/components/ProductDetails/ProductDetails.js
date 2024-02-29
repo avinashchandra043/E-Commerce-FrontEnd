@@ -163,11 +163,11 @@ function ProductDetails({ productData }) {
                 <div className="flex items-center space-x-3">
                   <Rating
                     name="read-only"
-                    value={productData?.ratingData.avgRating}
+                    value={productData?.ratingData?.avgRating}
                     readOnly
                   />
                   <p className="opacity-50 text-sm">
-                    {productData?.ratingData.totalRating} Ratings
+                    {productData?.ratingData?.totalRating} Ratings
                   </p>
                   <p className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
                     {productData?.reviews.length} Reviews
@@ -319,7 +319,7 @@ function ProductDetails({ productData }) {
                 <div className="flex items-center space-x-3">
                   <Rating value={4.5} readOnly precision={0.5} />
                   <p className="opacity-60">
-                    {productData.ratingData.totalRating} Ratings
+                    {productData?.ratingData.totalRating} Ratings
                   </p>
                 </div>
                 <Box className="mt-5 space-y-3">
@@ -333,7 +333,7 @@ function ProductDetails({ productData }) {
                         variant="determinate"
                         value={
                           (productData?.ratingData.excellent * 100) /
-                          productData.ratingData.totalRating
+                          productData?.ratingData.totalRating
                         }
                         color="success"
                       />
@@ -350,7 +350,7 @@ function ProductDetails({ productData }) {
                         variant="determinate"
                         value={
                           (productData?.ratingData.good * 100) /
-                          productData.ratingData.totalRating
+                          productData?.ratingData.totalRating
                         }
                         color="secondary"
                       />
@@ -366,7 +366,7 @@ function ProductDetails({ productData }) {
                         variant="determinate"
                         value={
                           (productData?.ratingData.average * 100) /
-                          productData.ratingData.totalRating
+                          productData?.ratingData.totalRating
                         }
                         color="warning"
                       />
@@ -382,7 +382,7 @@ function ProductDetails({ productData }) {
                         variant="determinate"
                         value={
                           (productData?.ratingData.poor * 100) /
-                          productData.ratingData.totalRating
+                          productData?.ratingData.totalRating
                         }
                         color="error"
                       />
