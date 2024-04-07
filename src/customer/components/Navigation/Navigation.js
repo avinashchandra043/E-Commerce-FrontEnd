@@ -11,7 +11,7 @@ import { Avatar, Button, MenuItem, Menu } from "@mui/material";
 import { navigation } from "./navigationData";
 import AuthModal from "../../auth/AuthModal";
 import { connect } from "react-redux";
-import { getUser, logout } from "../../../Action/authAction";
+import { logout } from "../../../Action/authAction";
 import { AvatarColor } from "../../../Data/colorData";
 import Logo from "../../../Assets/ECommerceLogo.png";
 

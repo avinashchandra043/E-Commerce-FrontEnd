@@ -14,7 +14,6 @@ import {
 } from "../ActionTypes/cartActionType";
 import { baseApi } from "../Apis/apis";
 import { store } from "../store";
-import { getToken } from "./authAction";
 const { dispatch } = store;
 
 export const getCart = async () => {
