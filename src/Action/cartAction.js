@@ -14,6 +14,7 @@ import {
 } from "../ActionTypes/cartActionType";
 import { baseApi } from "../Apis/apis";
 import { store } from "../store";
+import { getToken } from "./authAction";
 const { dispatch } = store;
 
 export const getCart = async () => {
@@ -28,6 +29,7 @@ export const getCart = async () => {
 
 export const addItemToCart = async (reqData) => {
   dispatch({ type: ADD_ITEM_TO_CART_REQUEST });
+
   try {
     const { data } = await baseApi.put(`/api/cart/add`, reqData);
     dispatch({ type: ADD_ITEM_TO_CART_SUCCESS, payload: data });

@@ -69,9 +69,9 @@ const Navigation = ({ user, token }) => {
     }
   }, [location.pathname, navigate, user]);
 
-  useEffect(() => {
-    getUser(token);
-  }, [token]);
+  // useEffect(() => {
+  //   getUser(token);
+  // }, [token]);
   return (
     <div className="bg-white z-10 mb-10">
       {/* Mobile menu */}

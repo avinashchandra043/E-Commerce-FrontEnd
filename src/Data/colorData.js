@@ -1,6 +1,7 @@
 export const ThemeColor = {
   light: {
     primaryBackground: "#FFFFFF",
+    themeBackground: "",
     primaryText: "#333333",
     secondaryText: "#666666",
     accentColor: "#3498db",
@@ -11,24 +12,16 @@ export const ThemeColor = {
     inputFieldBackground: "#f5f5f5",
     inputFieldText: "#333333",
   },
-  dark: {
-    primaryBackground: "#121212",
-    primaryText: "#FFFFFF",
-    secondaryText: "#999999",
-    accentColor: "#3498db",
-    primaryButton: "#27ae60",
-    secondaryButton: "#e74c3c",
-    linkColor: "#3498db",
-    borderColor: "#333333",
-    inputFieldBackground: "#1a1a1a",
-    inputFieldText: "#FFFFFF",
-  },
+};
+
+export const themeColor = {
+  colorOfTheYear23: "#FFC196",
 };
 
 export const AvatarColor = {
   A: "#3498db",
   B: "#2ecc71",
-  C: "#e74c3c",
+  C: "#e74cf2",
   D: "#f39c12",
   E: "#9b59b6",
   F: "#1abc9c",
@@ -50,6 +43,6 @@ export const AvatarColor = {
   V: "#2980b9",
   W: "#27ae60",
   X: "#16a085",
-  Y: "#d35400",
+  Y: "#d354ff",
   Z: "#f39c12",
 };
