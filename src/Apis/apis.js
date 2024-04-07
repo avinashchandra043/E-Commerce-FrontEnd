@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 const PROD = "PROD";
 const DEV = "DEV";
 const currentEnvironment = DEV;
@@ -33,8 +32,4 @@ export const baseApi = axios.create({
     Authorization: `Bearer ${localStorage.getItem("jwt")}`,
     "Content-Type": "application/json",
   },
-});
-
-export const eCommerceApi = axios.create({
-  baseURL: API.eCommerceApi,
 });

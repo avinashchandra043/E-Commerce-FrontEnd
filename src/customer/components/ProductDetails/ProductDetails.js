@@ -40,12 +40,6 @@ const product = {
     { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400" },
     { name: "Black", class: "bg-gray-900", selectedClass: "ring-gray-900" },
   ],
-  sizes: [
-    { name: "S", inStock: true },
-    { name: "M", inStock: true },
-    { name: "L", inStock: true },
-    { name: "XL", inStock: true },
-  ],
   description:
     'The Basic Tee 6-Pack allows you to fully express your vibrant personality with three grayscale options. Feeling adventurous? Put on a heather gray tee. Want to be a trendsetter? Try our exclusive colorway: "Black". Need to add an extra pop of color to your outfit? Our white tee has you covered.',
   highlights: [
@@ -191,14 +185,14 @@ function ProductDetails({ productData }) {
                       Choose a size
                     </RadioGroup.Label>
                     <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
-                      {product.sizes.map((size) => (
+                      {productData?.sizes.map((size) => (
                         <RadioGroup.Option
                           key={size.name}
                           value={size}
-                          disabled={!size.inStock}
+                          disabled={!size.quantity}
                           className={({ active }) =>
                             classNames(
-                              size.inStock
+                              size.quantity
                                 ? "cursor-pointer bg-white text-gray-900 shadow-sm"
                                 : "cursor-not-allowed bg-gray-50 text-gray-200",
                               active ? "ring-2 ring-indigo-500" : "",
@@ -211,7 +205,7 @@ function ProductDetails({ productData }) {
                               <RadioGroup.Label as="span">
                                 {size.name}
                               </RadioGroup.Label>
-                              {size.inStock ? (
+                              {size.quantity ? (
                                 <span
                                   className={classNames(
                                     active ? "border" : "border-2",
@@ -254,7 +248,12 @@ function ProductDetails({ productData }) {
                 <Button
                   onClick={handleAddToCart}
                   variant="contained"
-                  sx={{ px: "2rem", py: "1rem", bgcolor: "#9155fd" }}
+                  sx={{
+                    px: "2rem",
+                    py: "1rem",
+                    bgcolor: "#9155fd",
+                    my: "2rem",
+                  }}
                 >
                   Add To Cart
                 </Button>

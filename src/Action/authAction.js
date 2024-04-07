@@ -26,14 +26,20 @@ const registerFailure = (error) => ({ type: REGISTER_FAILURE, payload: error });
 export const register = async (userData) => {
   dispatch(registerRequest());
   try {
-    const response = await axios.post(`${API}/auth/signup`, userData);
+    const response = await axios.post(
+      `${API.eCommerceApi}/auth/signup`,
+      userData
+    );
     const user = response.data;
     if (user.jwt) {
       localStorage.setItem("jwt", user.jwt);
+      dispatch(registerSuccess(user.jwt));
+      return true;
     }
-    dispatch(registerSuccess(user.jwt));
+    return false;
   } catch (err) {
     dispatch(registerFailure(err.message));
+    return false;
   }
 };
 
@@ -44,14 +50,20 @@ const loginFailure = (error) => ({ type: LOGIN_FAILURE, payload: error });
 export const login = async (userData) => {
   dispatch(loginRequest());
   try {
-    const response = await axios.post(`${API}/auth/signin`, userData);
+    const response = await axios.post(
+      `${API.eCommerceApi}/auth/signin`,
+      userData
+    );
     const user = response.data;
     if (user.jwt) {
       localStorage.setItem("jwt", user.jwt);
+      dispatch(loginSuccess(user.jwt));
+      return true;
     }
-    dispatch(loginSuccess(user.jwt));
+    return false;
   } catch (err) {
     dispatch(loginFailure(err.message));
+    return false;
   }
 };
 
@@ -62,12 +74,17 @@ const getUserFailure = (error) => ({ type: GET_USER_FAILURE, payload: error });
 export const getUser = async (jwt) => {
   dispatch(getUserRequest());
   try {
-    const response = await axios.get(`${API}/api/users/profile`, {
-      headers: { Authorization: `Bearer ${jwt}` },
-    });
-    const user = response.data;
-    dispatch(loginSuccess(jwt));
-    dispatch(getUserSuccess(user));
+    if (jwt) {
+      const response = await axios.get(
+        `${API.eCommerceApi}/api/users/profile`,
+        {
+          headers: { Authorization: `Bearer ${jwt}` },
+        }
+      );
+      const user = response.data;
+      dispatch(loginSuccess(jwt));
+      dispatch(getUserSuccess(user));
+    }
   } catch (err) {
     dispatch(getUserFailure(err.message));
   }
