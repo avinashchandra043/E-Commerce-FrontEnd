@@ -19,7 +19,6 @@ const useStyles = createUseStyles({
     background: "transparent",
     transition: "border-color 0.2s",
     "&:focus": {
-      paddingBottom: "6px",
       fontWeight: "700",
       borderWidth: "3px",
       borderImage: "linear-gradient(to right, #11998e, #38ef7d)",
@@ -40,7 +39,7 @@ const useStyles = createUseStyles({
     "&:placeholder-shown + $formLabel": {
       fontSize: "1.3rem",
       cursor: "text",
-      top: "20px",
+      top: "10px",
     },
   },
   formLabel: {
