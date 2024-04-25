@@ -1,10 +1,10 @@
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { connect } from "react-redux";
-import Home from "../customer/pages/Home";
+import Home from "../Pages/Customer/Home";
 import Cart from "../customer/components/Cart/Cart";
-import Navigation from "../customer/components/Navigation";
-import Footer from "../customer/components/Footer/Footer";
+import Navigation from "../Components/Navigation";
+import Footer from "../Components/Footer/Footer";
 import Product from "../customer/components/Product/Product";
 import ProductDetails from "../customer/components/ProductDetails/ProductDetails";
 import Checkout from "../customer/components/Checkout/Checkout";
@@ -13,7 +13,6 @@ import OrderDetails from "../customer/components/Order/OrderDetails";
 import { getToken, getUser } from "../Action/authAction";
 import PaymentSuccess from "../customer/components/Payment/PaymentSuccess";
 import Page404 from "../Pages/Page404/Page404";
-
 const CustomerRouters = ({ jwt }) => {
   const token = getToken();
 
@@ -34,13 +33,9 @@ const CustomerRouters = ({ jwt }) => {
 
   return (
     <div>
-      <div>
-        <Navigation />
-      </div>
+      <Navigation />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Home />} />
-        <Route path="/register" element={<Home />} />
         <Route path="/:levelOne/:levelTwo/:levelThree" element={<Product />} />
         <Route path="/product/:productId" element={<ProductDetails />} />
         <Route
@@ -76,9 +71,7 @@ const CustomerRouters = ({ jwt }) => {
 
         <Route path="*" element={<Page404 />} />
       </Routes>
-      <div>
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 };

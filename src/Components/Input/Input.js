@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createUseStyles } from "react-jss";
 
 const useStyles = createUseStyles({
@@ -15,7 +15,7 @@ const useStyles = createUseStyles({
     borderBottom: "2px solid #9b9b9b",
     outline: "0",
     fontSize: "1.3rem",
-    padding: "7px 10px 0px 10px",
+    padding: "7px 10px 7px 10px",
     background: "transparent",
     transition: "border-color 0.2s",
     "&:focus": {
@@ -68,8 +68,9 @@ const Input = ({
   id,
   required = true,
   changeHandler,
+  defaultValue = "",
 }) => {
-  // const [showPassword, setShowPassword] = useState(false);
+  const [val, setVal] = useState(defaultValue);
   const classes = useStyles();
   const inputRef = useRef(null);
 
@@ -78,16 +79,9 @@ const Input = ({
       inputRef.current.focus();
     }
   };
-
-  // const showPasswordHandler = (e) => {
-  //   e.stopPropagation();
-  //   setShowPassword(!showPassword);
-  // };
-
-  // useEffect(() => {
-  //   if (showPassword) inputRef.current.type = "text";
-  //   else inputRef.current.type = "password";
-  // }, [showPassword]);
+  useEffect(() => {
+    setVal(defaultValue);
+  }, [defaultValue]);
 
   return (
     <div
@@ -101,12 +95,14 @@ const Input = ({
         placeholder={placeholder}
         name={label}
         id={id}
+        value={val}
         onChange={(e) => {
+          setVal(e.target.value);
           changeHandler(e.target.value);
         }}
         required
       />
-      <label for={label} className={classes.formLabel}>
+      <label htmlFor={id} className={classes.formLabel}>
         {placeholder} {required && <sup>*</sup>}
       </label>
     </div>

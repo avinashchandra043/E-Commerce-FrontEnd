@@ -2,18 +2,16 @@ import { Fragment, useEffect, useState } from "react";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
-  MagnifyingGlassIcon,
   ShoppingBagIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Avatar, Button, MenuItem, Menu } from "@mui/material";
-import { navigation } from "./navigationData";
-import AuthModal from "../../auth/AuthModal";
 import { connect } from "react-redux";
-import { logout } from "../../../Action/authAction";
-import { AvatarColor } from "../../../Data/colorData";
-import Logo from "../../../Assets/ECommerceLogo.png";
+import { getUser, logout } from "../../Action/authAction";
+import { navigation } from "../../Data/navigationData";
+import Logo from "../../Assets/ECommerceLogo.png";
+import { AvatarColor } from "../../Data/colorData";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -23,7 +21,6 @@ const Navigation = ({ user, token }) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const [openAuthModal, setOpenAuthModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const openUserMenu = Boolean(anchorEl);
@@ -36,11 +33,7 @@ const Navigation = ({ user, token }) => {
     setAnchorEl(null);
   };
   const handleOpen = () => {
-    setOpenAuthModal(true);
-  };
-
-  const handleClose = () => {
-    setOpenAuthModal(false);
+    navigate("/auth");
   };
   const handleCategoryClick = (category, section, item, close) => {
     navigate(`/${category.id}/${section.id}/${item.id}`);
@@ -58,22 +51,10 @@ const Navigation = ({ user, token }) => {
   };
 
   useEffect(() => {
-    if (user) {
-      handleClose();
-    }
-    if (
-      user &&
-      (location.pathname === "/login" || location.pathname === "/register")
-    ) {
-      navigate(-1);
-    }
-  }, [location.pathname, navigate, user]);
-
-  // useEffect(() => {
-  //   getUser(token);
-  // }, [token]);
+    getUser(token);
+  }, [token]);
   return (
-    <div className="bg-white z-10 mb-10">
+    <div className="bg-white z-10">
       {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
@@ -210,10 +191,7 @@ const Navigation = ({ user, token }) => {
 
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   <div className="flow-root">
-                    <button
-                      // href="#"
-                      className="-m-2 block p-2 font-medium text-gray-900"
-                    >
+                    <button className="-m-2 block p-2 font-medium text-gray-900">
                       Sign in
                     </button>
                   </div>
@@ -255,8 +233,6 @@ const Navigation = ({ user, token }) => {
                 <span className="sr-only">Open menu</span>
                 <Bars3Icon className="h-6 w-6" aria-hidden="true" />
               </button>
-
-              {/* Logo */}
               <div
                 className="ml-4 flex lg:ml-0 cursor-pointer"
                 onClick={handleHomeClick}
@@ -295,7 +271,6 @@ const Navigation = ({ user, token }) => {
                             leaveTo="opacity-0"
                           >
                             <Popover.Panel className="absolute inset-x-0 top-full text-sm text-gray-500">
-                              {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
                               <div
                                 className="absolute inset-0 top-1/2 bg-white shadow"
                                 aria-hidden="true"
@@ -440,17 +415,6 @@ const Navigation = ({ user, token }) => {
                   )}
                 </div>
 
-                {/* Search */}
-                <div className="flex lg:ml-6">
-                  <p className="p-2 text-gray-400 hover:text-gray-500">
-                    <span className="sr-only">Search</span>
-                    <MagnifyingGlassIcon
-                      className="h-6 w-6"
-                      aria-hidden="true"
-                    />
-                  </p>
-                </div>
-
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
                   <Button className="group -m-2 flex items-center p-2">
@@ -458,9 +422,7 @@ const Navigation = ({ user, token }) => {
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                      2
-                    </span>
+                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800"></span>
                     <span className="sr-only">items in cart, view bag</span>
                   </Button>
                 </div>
@@ -469,7 +431,6 @@ const Navigation = ({ user, token }) => {
           </div>
         </nav>
       </header>
-      <AuthModal handleClose={handleClose} open={openAuthModal} />
     </div>
   );
 };
