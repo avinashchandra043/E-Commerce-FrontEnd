@@ -1,23 +1,3 @@
-export const ThemeColor = {
-  light: {
-    primaryBackground: "#FFFFFF",
-    themeBackground: "",
-    primaryText: "#333333",
-    secondaryText: "#666666",
-    accentColor: "#3498db",
-    primaryButton: "#27ae60",
-    secondaryButton: "#e74c3c",
-    linkColor: "#3498db",
-    borderColor: "#dcdcdc",
-    inputFieldBackground: "#f5f5f5",
-    inputFieldText: "#333333",
-  },
-};
-
-export const themeColor = {
-  colorOfTheYear23: "#FFC196",
-};
-
 export const AvatarColor = {
   A: "#3498db",
   B: "#2ecc71",
@@ -46,3 +26,25 @@ export const AvatarColor = {
   Y: "#d354ff",
   Z: "#f39c12",
 };
+
+const currentTheme = "light";
+
+const ThemeColor = {
+  light: {
+    primaryBackground: "#fff",
+    primaryText: "#222",
+    secondaryText: "#fff",
+    websiteTheme: "#ffbcac",
+    websiteGradient: "linear-gradient(to right, #bc4e9c, #f80759)",
+    success: "#27ae60",
+    danger: "#e74c3c",
+    buttonColor: "#33475b",
+    buttonHoverColor: "rgba(51, 71, 91,0.8)",
+    linkColor: "#3498db",
+    inputFieldBackground: "#f0f0f0",
+    graphBorderColor: "#f80759",
+    graphBackgroundColor: "#bc4e9c",
+  },
+};
+
+export const theme = ThemeColor[currentTheme];

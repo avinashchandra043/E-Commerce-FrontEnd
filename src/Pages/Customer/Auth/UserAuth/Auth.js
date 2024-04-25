@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import "./Auth.css";
-import { createUseStyles } from "react-jss";
-import { themeColor, webFontSize } from "../../../Data";
-import Input from "../../../Components/Input";
-import { Button } from "@mui/material";
-import GoogleIcon from "@mui/icons-material/Google";
 import { useNavigate } from "react-router-dom";
-import { login, register } from "../../../Action/authAction";
+import { createUseStyles } from "react-jss";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { webFontSize } from "../../../../Data";
+import { theme } from "../../../../Data/colorData";
+import { login, register } from "../../../../Action/authAction";
+import Input from "../../../../Components/Input";
+import { auth } from "../../../../Data/data";
 
 const useStyle = createUseStyles({
   ...webFontSize,
   inputField: {
     maxWidth: "380px",
     width: "100%",
-    background: themeColor.inputFieldBackground,
+    background: theme.inputFieldBackground,
     display: "flex",
     justifyContent: "center",
   },
@@ -23,33 +25,31 @@ const useStyle = createUseStyles({
     display: "flex",
     gap: "20px",
   },
-  socialIcon: {
-    height: "46px",
-    width: "46px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    margin: "0 0.45rem",
-    color: "#333",
-    borderRadius: "50%",
-    border: "1px solid #333",
-    textDecoration: "none",
-    fontSize: "1.1rem",
-    transition: "0.3s",
-    cursor: "pointer",
-    "&:hover": {
-      color: themeColor.websiteTheme,
-    },
-  },
   container: {
     "&:before": {
-      backgroundColor: themeColor.websiteTheme,
+      backgroundImage: `${theme.websiteGradient}`,
     },
+  },
+  actionButton: {
+    background: `${theme.buttonColor}`,
+    color: `${theme.secondaryText}`,
+    padding: "20px 40px",
+    fontSize: "20px",
+    borderRadius: "9px",
+    cursor: "pointer",
+    border: "0px",
+    "&:hover": {
+      background: `${theme.buttonHoverColor}`,
+    },
+  },
+  cursorPointer: {
+    cursor: "pointer",
   },
 });
 
 function SignInSignUpForm() {
   const [isSignUpMode, setIsSignUpMode] = useState(false);
+
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -58,6 +58,7 @@ function SignInSignUpForm() {
     signInPassword: "",
     signUpPassword: "",
   });
+
   const navigate = useNavigate();
   const classes = useStyle();
 
@@ -69,19 +70,17 @@ function SignInSignUpForm() {
     setIsSignUpMode(false);
   };
 
-  const prevPage = () => {
-    navigate(-1);
-  };
-
   const handleSignInSubmit = async (e) => {
     e.preventDefault();
     const userData = {
       email: data.signInEmail,
       password: data.signInPassword,
     };
-    const res = await login(userData);
-    if (res) {
-      prevPage();
+    const user = await login(userData);
+    if (user) {
+      navigate(-1);
+    } else {
+      toast("Login Failed", { type: "error" });
     }
   };
 
@@ -95,7 +94,10 @@ function SignInSignUpForm() {
     };
     const res = await register(userData);
     if (res) {
-      prevPage();
+      navigate(-1);
+    } else {
+      toast("Register Failed", { type: "error" });
+      toast("Change Email", { type: "warning" });
     }
   };
 
@@ -118,7 +120,7 @@ function SignInSignUpForm() {
                 lable="Email"
                 type="email"
                 placeholder="Email"
-                id="registerEmail"
+                id="Email"
                 changeHandler={(val) => {
                   setData({ ...data, signInEmail: val });
                 }}
@@ -130,51 +132,20 @@ function SignInSignUpForm() {
                 lable="Password"
                 type="password"
                 placeholder="Password"
-                id="registerPassword"
+                id="Password"
                 changeHandler={(val) => {
                   setData({ ...data, signInPassword: val });
                 }}
                 required
               />
             </div>
-            <Button
-              className="w-full"
-              type="submit"
-              variant="contained"
-              size="large"
-              sx={{
-                padding: "0.8rem 0",
-                bgcolor: themeColor.buttonColor,
-                maxWidth: "180px",
-                ":hover": {
-                  bgcolor: themeColor.buttonHoverColor,
-                },
-                ":active": {
-                  bgcolor: themeColor.buttonHoverColor,
-                },
-              }}
-            >
+            <button className={classes.actionButton} type="submit">
               Login
-            </Button>
-            <p className="social-text">Or Sign in with social platforms</p>
-            <div className="social-media">
-              <div className={classes.socialIcon}>
-                <i className="fab fa-facebook-f"></i>
-              </div>
-              <div className={classes.socialIcon}>
-                <i className="fab fa-twitter"></i>
-              </div>
-              <div className={classes.socialIcon}>
-                <GoogleIcon />
-              </div>
-              <div className={classes.socialIcon}>
-                <i className="fab fa-linkedin-in"></i>
-              </div>
-            </div>
+            </button>
             <div className="loginSignup">
               <div>If you don't have account?</div>
               <div onClick={handleSignUpClick}>
-                <u>Register</u>
+                <u className={classes.cursorPointer}>Register</u>
               </div>
             </div>
           </form>
@@ -231,44 +202,13 @@ function SignInSignUpForm() {
               />
             </div>
 
-            <Button
-              className="w-full"
-              type="submit"
-              variant="contained"
-              size="large"
-              sx={{
-                padding: "0.8rem 0",
-                bgcolor: themeColor.buttonColor,
-                maxWidth: "180px",
-                ":hover": {
-                  bgcolor: themeColor.buttonHoverColor,
-                },
-                ":active": {
-                  bgcolor: themeColor.buttonHoverColor,
-                },
-              }}
-            >
+            <button className={classes.actionButton} type="submit">
               Register
-            </Button>
-            <p className="social-text">Or Sign up with social platforms</p>
-            <div className="social-media">
-              <div className={classes.socialIcon}>
-                <i className="fab fa-facebook-f"></i>
-              </div>
-              <div className={classes.socialIcon}>
-                <i className="fab fa-twitter"></i>
-              </div>
-              <div className={classes.socialIcon}>
-                <GoogleIcon />
-              </div>
-              <div className={classes.socialIcon}>
-                <i className="fab fa-linkedin-in"></i>
-              </div>
-            </div>
+            </button>
             <div className="loginSignup">
               <div>If you have already account?</div>
               <div onClick={handleSignInClick}>
-                <u>Login</u>
+                <u className={classes.cursorPointer}>Login</u>
               </div>
             </div>
           </form>
@@ -282,14 +222,13 @@ function SignInSignUpForm() {
               className={`${classes.boldHeading}`}
               style={{ padding: "40px 60px 0px 20px" }}
             >
-              New to our community&nbsp;?
+              {auth.signup.title}
             </div>
             <p
               className={`${classes.lightSubHeading}`}
               style={{ padding: "20px 140px 40px 40px" }}
             >
-              Discover a world of possibilities! Join us and explore a vibrant
-              community where ideas flourish and connections thrive.
+              {auth.signup.subTitle}
             </p>
             <button
               className={`btn transparent`}
@@ -297,7 +236,7 @@ function SignInSignUpForm() {
               style={{ borderRadius: "10px", transform: "translateX(-25%)" }}
             >
               <div
-                className={`${classes.boldSubHeading}`}
+                className={`${classes.boldSubHeading} ${classes.cursorPointer}`}
                 style={{ padding: "10px 20px" }}
               >
                 Sign up
@@ -311,14 +250,13 @@ function SignInSignUpForm() {
               className={`${classes.boldHeading}`}
               style={{ padding: "40px 0px 0px 40px" }}
             >
-              One of Our Valued Members
+              {auth.signin.title}
             </div>
             <p
               className={`${classes.lightSubHeading}`}
               style={{ padding: "20px 40px 40px 100px" }}
             >
-              Thank you for being part of our community. Your presence enriches
-              our shared experiences. Let's continue this journey together!
+              {auth.signin.subTitle}
             </p>
             <button
               className="btn transparent"
@@ -326,7 +264,7 @@ function SignInSignUpForm() {
               style={{ borderRadius: "10px", transform: "translateX(25%)" }}
             >
               <div
-                className={`${classes.boldSubHeading}`}
+                className={`${classes.boldSubHeading} ${classes.cursorPointer}`}
                 style={{ padding: "10px 20px" }}
               >
                 Sign in
@@ -335,6 +273,8 @@ function SignInSignUpForm() {
           </div>
         </div>
       </div>
+
+      <ToastContainer position="bottom-left" autoClose={5000} closeOnClick />
     </div>
   );
 }
