@@ -25,9 +25,11 @@ const CustomerRouters = ({ jwt }) => {
 
   const PrivateRoute = ({ path, element }) => {
     return isAuthenticated() ? (
-      <Route path={path} element={element} />
+      <Routes>
+        <Route path={path} element={element} />
+      </Routes>
     ) : (
-      <Navigate to="/login" />
+      <Navigate to="/auth" />
     );
   };
 

@@ -57,12 +57,14 @@ function classNames(...classes) {
 }
 
 function ProductDetails({ productData }) {
-  const [selectedSize, setSelectedSize] = useState(product?.sizes?.[2]);
+  const [selectedSize, setSelectedSize] = useState(
+    productData?.sizes?.[0]?.name
+  );
   const navigate = useNavigate();
   const params = useParams();
 
   const handleAddToCart = () => {
-    const data = { productId: params.productId, size: selectedSize.name };
+    const data = { productId: params?.productId, size: selectedSize?.name };
     const req = addItemToCart(data);
     if (req) navigate("/cart");
   };
