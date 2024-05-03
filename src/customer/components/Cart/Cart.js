@@ -9,7 +9,9 @@ function Cart({ cart, updateCartItem, deleteCartItem }) {
   const handleCheckout = () => {
     navigate(`/checkout?step=2`);
   };
+  console.log(">>>>>>>>>>>>cartComihg");
   useEffect(() => {
+    console.log(">>>>>>>>>>>>cartComihg2");
     getCart();
   }, [updateCartItem, deleteCartItem]);
   return (

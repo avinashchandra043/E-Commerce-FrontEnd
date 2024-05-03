@@ -176,45 +176,20 @@ const Navigation = ({ user, token }) => {
                   </Tab.Panels>
                 </Tab.Group>
 
-                <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-                  {navigation.pages.map((page) => (
-                    <div key={page.name} className="flow-root">
-                      <a
-                        href={page.href}
+                {user?.firstName ? (
+                  <></>
+                ) : (
+                  <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+                    <div className="flow-root">
+                      <button
                         className="-m-2 block p-2 font-medium text-gray-900"
+                        onClick={handleOpen}
                       >
-                        {page.name}
-                      </a>
+                        Sign in
+                      </button>
                     </div>
-                  ))}
-                </div>
-
-                <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-                  <div className="flow-root">
-                    <button className="-m-2 block p-2 font-medium text-gray-900">
-                      Sign in
-                    </button>
                   </div>
-                  <div className="flow-root">
-                    <button className="-m-2 block p-2 font-medium text-gray-900">
-                      Create account
-                    </button>
-                  </div>
-                </div>
-
-                <div className="border-t border-gray-200 px-4 py-6">
-                  <button className="-m-2 flex items-center p-2">
-                    <img
-                      src="https://tailwindui.com/img/flags/flag-india.svg"
-                      alt=""
-                      className="block h-auto w-5 flex-shrink-0"
-                    />
-                    <span className="ml-3 block text-base font-medium text-gray-900">
-                      IND
-                    </span>
-                    <span className="sr-only">, change currency</span>
-                  </button>
-                </div>
+                )}
               </Dialog.Panel>
             </Transition.Child>
           </div>

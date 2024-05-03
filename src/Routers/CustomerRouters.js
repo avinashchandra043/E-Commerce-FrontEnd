@@ -41,8 +41,8 @@ const CustomerRouters = ({ jwt }) => {
         <Route path="/:levelOne/:levelTwo/:levelThree" element={<Product />} />
         <Route path="/product/:productId" element={<ProductDetails />} />
         <Route
-          path="/cart"
-          element={<PrivateRoute path="/cart" element={<Cart />} />}
+          path="/cart/*"
+          element={<PrivateRoute path="/cart/*" element={<Cart />} />}
         />
         <Route
           path="/checkout"
