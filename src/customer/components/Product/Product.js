@@ -22,6 +22,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { findProducts } from "../../../Action/productAction";
+import ProductSkeleton from "../../../Components/Skeleton/ProductSkeleton";
 
 const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
@@ -432,9 +433,11 @@ function Product({ products }) {
               {/* Product grid */}
               <div className="lg:col-span-4 w-full">
                 <div className="flex flex-wrap justify-center bg-white py-5">
-                  {products?.content?.map((item) => (
-                    <ProductCard product={item} />
-                  ))}
+                  {products?.content
+                    ? products?.content?.map((item) => (
+                        <ProductCard product={item} />
+                      ))
+                    : [1, 1, 1, 1, 1, 1, 1, 1].map(() => <ProductSkeleton />)}
                 </div>
               </div>
             </div>

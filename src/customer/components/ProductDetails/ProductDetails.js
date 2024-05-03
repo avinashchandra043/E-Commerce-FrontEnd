@@ -3,11 +3,11 @@ import { RadioGroup } from "@headlessui/react";
 import { Rating, Button, Grid, Box, LinearProgress } from "@mui/material";
 import ProductReviewCard from "./ProductReviewCard";
 import { mens_kurta } from "../../../Data/mens_kurta";
-import HomeSectionCard from "../../../Components/HomeSectionCard/HomeSectionCard";
 import { useNavigate, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { findProductsById } from "../../../Action/productAction";
 import { addItemToCart } from "../../../Action/cartAction";
+import HomeSectionCard from "../../../Components/HomeSectionCard/HomeSectionCard";
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -57,14 +57,15 @@ function classNames(...classes) {
 }
 
 function ProductDetails({ productData }) {
-  const [selectedSize, setSelectedSize] = useState(
-    productData?.sizes?.[0]?.name
-  );
+  const [selectedSize, setSelectedSize] = useState("M");
   const navigate = useNavigate();
   const params = useParams();
 
   const handleAddToCart = () => {
-    const data = { productId: params?.productId, size: selectedSize?.name };
+    const data = {
+      productId: params.productId,
+      size: selectedSize.name || "M",
+    };
     const req = addItemToCart(data);
     if (req) navigate("/cart");
   };
