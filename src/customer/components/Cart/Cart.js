@@ -4,16 +4,25 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { getCart } from "../../../Action/cartAction";
-function Cart({ cart, updateCartItem, deleteCartItem }) {
+import { getToken, getUser } from "../../../Action/authAction";
+function Cart({ cart, updateCartItem, deleteCartItem, jwt }) {
   const navigate = useNavigate();
   const handleCheckout = () => {
     navigate(`/checkout?step=2`);
   };
-  console.log(">>>>>>>>>>>>cartComihg");
   useEffect(() => {
-    console.log(">>>>>>>>>>>>cartComihg2");
     getCart();
   }, [updateCartItem, deleteCartItem]);
+  useEffect(() => {
+    console.log(">>>>>coming");
+    const token = getToken();
+
+    if (token && !jwt) {
+      getUser(token);
+    } else if (!token && !jwt) {
+      navigate("/auth");
+    }
+  }, [jwt, navigate]);
   return (
     <div>
       <div className="lg:grid grid-cols-3 lg:px-16 relative">
@@ -24,9 +33,9 @@ function Cart({ cart, updateCartItem, deleteCartItem }) {
         </div>
         <div className="px-5 sticky top-0 h-[100vh] mt-5 lg:mt-0">
           <div className="border">
-            <p className="uppercase font-bold opacity-60 pb-4">Price Details</p>
+            <p className="uppercase font-bold opacity-60 p-4">Price Details</p>
             <hr />
-            <div className="space-y-3 font-semibold mb-10">
+            <div className="space-y-3 font-semibold mb-10 px-5">
               <div className="flex justify-between pt-3 text-black">
                 <span>Price</span>
                 <span>₹{cart?.totalPrice}</span>
@@ -60,9 +69,10 @@ function Cart({ cart, updateCartItem, deleteCartItem }) {
     </div>
   );
 }
-const mapStateToProps = ({ cartReducer }) => ({
+const mapStateToProps = ({ cartReducer, authReducer }) => ({
   cart: cartReducer.cart,
   updateCartItem: cartReducer.updateCartItem,
   deleteCartItem: cartReducer.deleteCartItem,
+  jwt: authReducer.jwt,
 });
 export default connect(mapStateToProps)(Cart);
