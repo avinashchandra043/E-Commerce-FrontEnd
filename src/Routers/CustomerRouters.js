@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { connect } from "react-redux";
 import Home from "../Pages/Customer/Home";
 import Cart from "../customer/components/Cart/Cart";
@@ -19,19 +19,6 @@ const CustomerRouters = ({ jwt }) => {
   if (token && !jwt) {
     getUser(token);
   }
-  const isAuthenticated = () => {
-    return jwt !== null;
-  };
-
-  const PrivateRoute = ({ path, element }) => {
-    return isAuthenticated() ? (
-      <Routes>
-        <Route path={path} element={element} />
-      </Routes>
-    ) : (
-      <Navigate to="/auth" />
-    );
-  };
 
   return (
     <div>
@@ -40,37 +27,11 @@ const CustomerRouters = ({ jwt }) => {
         <Route path="/" element={<Home />} />
         <Route path="/:levelOne/:levelTwo/:levelThree" element={<Product />} />
         <Route path="/product/:productId" element={<ProductDetails />} />
-        <Route
-          path="/cart/*"
-          element={<PrivateRoute path="/cart/*" element={<Cart />} />}
-        />
-        <Route
-          path="/checkout"
-          element={<PrivateRoute path="/checkout" element={<Checkout />} />}
-        />
-        <Route
-          path="/account/order"
-          element={<PrivateRoute path="/account/order" element={<Order />} />}
-        />
-        <Route
-          path="/account/order/:orderId"
-          element={
-            <PrivateRoute
-              path="/account/order/:orderId"
-              element={<OrderDetails />}
-            />
-          }
-        />
-        <Route
-          path="/payment/:orderId"
-          element={
-            <PrivateRoute
-              path="/payment/:orderId"
-              element={<PaymentSuccess />}
-            />
-          }
-        />
-
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/account/order" element={<Order />} />
+        <Route path="/account/order/:orderId" element={<OrderDetails />} />
+        <Route path="/payment/:orderId" element={<PaymentSuccess />} />
         <Route path="*" element={<Page404 />} />
       </Routes>
       <Footer />
