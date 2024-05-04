@@ -22,6 +22,11 @@ const DeliveryAddressForm = ({ user }) => {
     const orderData = { address, navigate };
     createOrder(orderData);
   };
+
+  const handleDeliverHere = (address) => {
+    const orderData = { address, navigate };
+    createOrder(orderData);
+  };
   return (
     <div>
       <Grid container spacing={4}>
@@ -32,15 +37,18 @@ const DeliveryAddressForm = ({ user }) => {
         >
           <div className="p-5 py-7 border-b cursor-pointer">
             {user?.address?.map((item) => (
-              <AddressCard address={item} />
+              <>
+                <AddressCard address={item} />
+                <Button
+                  sx={{ mt: 2, bgcolor: "rgb(145,85,253)" }}
+                  size="large"
+                  variant="contained"
+                  onClick={() => handleDeliverHere(item)}
+                >
+                  Deliver Here
+                </Button>
+              </>
             ))}
-            <Button
-              sx={{ mt: 2, bgcolor: "rgb(145,85,253)" }}
-              size="large"
-              variant="contained"
-            >
-              Deliver Here
-            </Button>
           </div>
         </Grid>
         <Grid item xs={12} lg={7}>

@@ -14,12 +14,14 @@ function Cart({ cart, updateCartItem, deleteCartItem, jwt }) {
     getCart();
   }, [updateCartItem, deleteCartItem]);
   useEffect(() => {
-    console.log(">>>>>coming");
     const token = getToken();
-
     if (token && !jwt) {
-      getUser(token);
-    } else if (!token && !jwt) {
+      try {
+        getUser(token);
+      } catch (err) {
+        navigate("/auth");
+      }
+    } else if (!token) {
       navigate("/auth");
     }
   }, [jwt, navigate]);
