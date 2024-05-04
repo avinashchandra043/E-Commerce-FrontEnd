@@ -8,7 +8,6 @@ import { connect } from "react-redux";
 import { findProductsById } from "../../../Action/productAction";
 import { addItemToCart } from "../../../Action/cartAction";
 import HomeSectionCard from "../../../Components/HomeSectionCard/HomeSectionCard";
-import { getToken, getUser } from "../../../Action/authAction";
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -52,7 +51,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function ProductDetails({ productData, jwt }) {
+function ProductDetails({ productData }) {
   const [selectedSize, setSelectedSize] = useState("M");
   const navigate = useNavigate();
   const params = useParams();
@@ -406,8 +405,7 @@ function ProductDetails({ productData, jwt }) {
   );
 }
 
-const mapStateToProps = ({ productReducer, authReducer }) => ({
+const mapStateToProps = ({ productReducer }) => ({
   productData: productReducer.product,
-  jwt: authReducer.jwt,
 });
 export default connect(mapStateToProps)(ProductDetails);
